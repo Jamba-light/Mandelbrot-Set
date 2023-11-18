@@ -6,19 +6,20 @@ using namespace std;
 using namespace sf;
 
 ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight){
-	m_pixel_size.push_back(pixelWidth, pixelHeight);
+	m_pixel_size = Vector2i(pixelWidth, pixelHeight);
 	m_aspectRatio = ((float)pixelHeight / pixelWidth);
-	m_plane_center = {0, 0};
-	m_plane_size(BASE_WIDTH, BASE_HEIGHT * m_aspectRatio);
+	m_plane_center = (Vector2f(0, 0));
+	m_plane_size = Vector2f(BASE_WIDTH, BASE_HEIGHT * m_aspectRatio);
 	m_zoomCount = 0;
-	m_State(State::CALCULATING);
+	m_state = CALCULATING;
+	m_vArray = VertexArray(Points, pixelWidth * pixelHeight);
 }
 
 void ComplexPlane::draw(RenderTarget& target, RenderStates states) const {
 
 }
 
-void complexPlane::updateRender() {
+void ComplexPlane::updateRender() {
 
 }
 
