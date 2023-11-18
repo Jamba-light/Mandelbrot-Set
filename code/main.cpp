@@ -6,8 +6,9 @@
 #include <sstream>
 #include <vector>
 
-using namespace sf;
 using namespace std;
+using namespace sf;
+
 
 int main()
 {
@@ -30,6 +31,7 @@ int main()
         Prompt the user
         ****************************************
         */
+        /*
         firstText.setFont(font);
         firstText.setString("");
         firstText.setCharacterSize();
@@ -41,6 +43,6 @@ int main()
         secondText.setCharacterSize();
         secondText.setFillColor(sf::Color::);
         secondText.setPosition(,);
-
+        */
     }
 }
