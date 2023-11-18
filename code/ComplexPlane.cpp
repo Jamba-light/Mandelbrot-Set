@@ -1,13 +1,19 @@
 #include "ComplexPlane.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-using namespace sf;
+
 using namespace std;
+using namespace sf;
 
 ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight){
-
+	m_pixel_size(pixelWidth, pixelHeight);
+	m_aspectRatio = ((float)pixelHeight / pixelWidth);
+	m_plane_center = {0, 0};
+	m_plane_size{BASE_WIDTH, BASE_HEIGHT * m_aspectRatio};
+	m_zoomCount = 0;
+	m_State(State::CALCULATING);
 }
-
+/*
 void ComplexPlane::draw(RenderTarget& target, RenderStates states) const {
 
 }
@@ -47,3 +53,4 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b) {
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel) {
 
 }
+/*
