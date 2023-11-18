@@ -14,7 +14,7 @@ ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight){
 	m_state = CALCULATING;
 	m_vArray = VertexArray(Points, pixelWidth * pixelHeight);
 }
-
+/*
 void ComplexPlane::draw(RenderTarget& target, RenderStates states) const {
 
 }
@@ -54,3 +54,4 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b) {
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel) {
 
 }
+/*
