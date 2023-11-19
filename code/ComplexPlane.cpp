@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <cmath>
+#include <sstream>
 using namespace std;
 using namespace sf;
 
@@ -20,26 +21,28 @@ void ComplexPlane::draw(RenderTarget& target, RenderStates states) const {
 }
 
 void ComplexPlane::updateRender() {
+	int pixelHeight = m_pixel_size.y;
+	int pixelWidth = m_pixel_size.x;
+
 	if (m_state == CALCULATING)
 	{
-		for (int j = 0; j < pixelWidth; j++)
+		for (int j = 0; j < pixelHeight; j++)
 		{
-			for (int i; i < pixelHeight; i++)
+			for (int i; i < pixelWidth; i++)
 			{
-				m_vArray[j + i * pixelWidth].position = { (float)j,(float)i };
+				m_vArray[(j * m_pixel_size + i].position = { (float)j,(float)i };
 
-				Vector2f coord = mapPixelToCoords(j, i);
+				Vector2f coord = mapPixelToCoords(Vector2i(j, i);
 				int iterations = countIterations(coord);
 
 				Uint8 r, g, b;
 				iterationsToRGB(iterations, r, g, b);
 
-				m_vArray[j + i * pixelWidth].color = { r,g,b };
-
-				m_state = DISPLAYING;
+				m_vArray[j * m_pixel_size + i].color = { r,g,b };
 			}
 		}
 	}
+	m_state = DISPLAYING;
 }
 
 void ComplexPlane::zoomIn() {
@@ -67,7 +70,7 @@ void ComplexPlane::setCenter(Vector2i mousePixel) {
 }
 
 void ComplexPlane::setMouseLocation(Vector2i mousPixel) {
-
+	m_mouseLocation = mapPixelToCoords(mousPixel);
 }
 
 void ComplexPlane::loadText(Text& text) {
