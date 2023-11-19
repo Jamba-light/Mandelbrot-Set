@@ -17,7 +17,7 @@ int main()
     VideoMode vm(width, height);
     RenderWindow window(vm, "Mandelbrot Set", Style::Default);
 
-    ComplexPlane plane(width,height);
+    ComplexPlane plane(width, height);
 
     sf::Font font;
     if (!font.loadFromFile("coolvetica.ttf"))
@@ -33,15 +33,15 @@ int main()
         Prompt the user
         ****************************************
         */
-        
+
         firstText.setFont(font);
         firstText.setCharacterSize(50);
         firstText.setFillColor(sf::Color::White);
-        firstText.setPosition(0,0);
+        firstText.setPosition(0, 0);
         plane.loadText(firstText);
-   
 
-        
+
+
         Event event;
         while (window.pollEvent(event))
         {
@@ -82,10 +82,10 @@ int main()
 
 
         window.clear();
-        
+        plane.draw(window, RenderStates::Default);
         window.draw(firstText);
         window.display();
 
-       
+
     }
 }
