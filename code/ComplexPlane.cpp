@@ -1,7 +1,7 @@
 #include "ComplexPlane.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
+#include <cmath>
 using namespace std;
 using namespace sf;
 
@@ -26,7 +26,7 @@ void ComplexPlane::updateRender() {
 		{
 			for (int i; i < pixelHeight; i++)
 			{
-				vArray[j + i * pixelWidth].position = { (float)j,(float)i };
+				m_vArray[j + i * pixelWidth].position = { (float)j,(float)i };
 
 				Vector2f coord = mapPixelToCoords(j, i);
 				int iterations = countIterations(coord);
@@ -34,20 +34,31 @@ void ComplexPlane::updateRender() {
 				Uint8 r, g, b;
 				iterationsToRGB(iterations, r, g, b);
 
-				vArray[j + i * pixelWidth].color = { r,g,b };
+				m_vArray[j + i * pixelWidth].color = { r,g,b };
 
 				m_state = DISPLAYING;
 			}
 		}
 	}
 }
-/**
-void ComplexPlane::zoomIn() {
 
+void ComplexPlane::zoomIn() {
+	m_zoomCount++;
+
+	float x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
+	float y_size = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_zoomCount);
+	m_plane_size = { x_size,y_size };
+	m_state = CALCULATING;
 }
 
 
 void ComplexPlane::zoomOut() {
+	m_zoomCount--;
+
+	float x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
+	float y_size = BASE_HEIGHT * m_aspectRatio * (BASE_ZOOM, m_zoomCount);
+	m_plane_size = { x_size,y_size };
+	m_state = CALCULATING;
 
 }
 
