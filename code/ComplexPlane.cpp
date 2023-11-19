@@ -65,8 +65,11 @@ void ComplexPlane::zoomOut() {
 
 }
 
-void ComplexPlane::setCenter(Vector2i mousePixel) {
 
+void ComplexPlane::setCenter(Vector2i mousePixel) {
+	Vector2f center = mapPixelToCoords(mousePixel.x, mousePixel.y);
+	m_plane_center = center;
+	m_state = CALCULATING;
 }
 
 void ComplexPlane::setMouseLocation(Vector2i mousPixel) {
@@ -74,7 +77,14 @@ void ComplexPlane::setMouseLocation(Vector2i mousPixel) {
 }
 
 void ComplexPlane::loadText(Text& text) {
+	stringstream ss;
+	ss << "Mandelbrot set\n";
+	ss << "Center: (" << < m_plane_center.x << "," << m_plane_center.y")\n";
+	ss << "Cursor: (" << m_mouseLocation.x << "," << m_mouseLocation.y")\n";
+	ss << "Left-click to zoom in\n";
+	ss << "Right-clock to zoom out\n";
 
+	text.setstring(ss.str());
 }
 
 size_t ComplexPlane::countIterations(Vector2f coord) {
