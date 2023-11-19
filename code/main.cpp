@@ -69,7 +69,7 @@ int main()
 
             if (event.MouseMoved)
             {
-                //plane.setMouseLocation(Mouse getPosition(window);
+                plane.setMouseLocation(Vector2i(event.mouseMove.x, event.mouseMove.y));
             }
 
             if (Keyboard::isKeyPressed(Keyboard::Escape))
