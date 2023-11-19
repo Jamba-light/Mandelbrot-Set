@@ -28,17 +28,17 @@ void ComplexPlane::updateRender() {
 	{
 		for (int j = 0; j < pixelHeight; j++)
 		{
-			for (int i; i < pixelWidth; i++)
+			for (int i = 0; i < pixelWidth; i++)
 			{
-				m_vArray[(j * m_pixel_size + i].position = { (float)j,(float)i };
+				m_vArray[(j * pixelWidth + i)].position = { (float)j,(float)i };
 
-				Vector2f coord = mapPixelToCoords(Vector2i(j, i);
+				Vector2f coord = mapPixelToCoords(Vector2i(j, i));
 				int iterations = countIterations(coord);
 
 				Uint8 r, g, b;
 				iterationsToRGB(iterations, r, g, b);
 
-				m_vArray[j * m_pixel_size + i].color = { r,g,b };
+				m_vArray[(j * pixelWidth + i)].color = { r,g,b };
 			}
 		}
 	}
@@ -65,9 +65,8 @@ void ComplexPlane::zoomOut() {
 
 }
 
-
 void ComplexPlane::setCenter(Vector2i mousePixel) {
-	Vector2f center = mapPixelToCoords(mousePixel.x, mousePixel.y);
+	Vector2f center = mapPixelToCoords(Vector2i(mousePixel.x, mousePixel.y));
 	m_plane_center = center;
 	m_state = CALCULATING;
 }
@@ -79,20 +78,73 @@ void ComplexPlane::setMouseLocation(Vector2i mousPixel) {
 void ComplexPlane::loadText(Text& text) {
 	stringstream ss;
 	ss << "Mandelbrot set\n";
-	ss << "Center: (" << < m_plane_center.x << "," << m_plane_center.y")\n";
-	ss << "Cursor: (" << m_mouseLocation.x << "," << m_mouseLocation.y")\n";
+	ss << "Center: (" << m_plane_center.x << "," << m_plane_center.y << ")\n";
+	ss << "Cursor: (" << m_mouseLocation.x << "," << m_mouseLocation.y << ")\n";
 	ss << "Left-click to zoom in\n";
 	ss << "Right-clock to zoom out\n";
 
-	text.setstring(ss.str());
+	text.setString(ss.str());
 }
 
 size_t ComplexPlane::countIterations(Vector2f coord) {
+	Vector2f z = coord;
+	size_t iterations = 0;
 
+	for (iterations; iterations < MAX_ITER; iterations++) {
+		float xtemp = pow(z.x, 2.0) + coord.x;
+		z.y = 2 * z.x * z.y + coord.y;
+		z.x = xtemp;
+
+		if (z.x > 2.0 || z.y > 2.0) {
+			break;
+		}
+	}
+	return iterations;
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b) {
+	const size_t maxIterations = MAX_ITER;
 
+	if (count == maxIterations) {
+		r = g = b = 0;
+	}
+	else {
+		const size_t regionSize = maxIterations / 5;
+		size_t region = count / regionSize;
+
+		double t = static_cast<double>(count % regionSize) / static_cast<double>(regionSize);
+
+		// Purple/Blue to Turquoise
+		if (region == 0) {
+			r = 0;
+			g = static_cast<Uint8>(t * 255);
+			b = static_cast<Uint8>((1.0 - t) * 255);
+		}
+		// Turquoise to Green
+		else if (region == 1) {
+			r = 0;
+			g = static_cast<Uint8>((1.0 - t) * 255);
+			b = static_cast<Uint8>(t * 255);
+		}
+		// Green to Yellow
+		else if (region == 2) {
+			r = static_cast<Uint8>(t * 255);
+			g = 255;
+			b = 0;
+		}
+		// Yellow to Red
+		else if (region == 3) {
+			r = 255;
+			g = static_cast<Uint8>((1.0 - t) * 255);
+			b = 0;
+		}
+		// Red
+		else {
+			r = 255;
+			g = 0;
+			b = 0;
+		}
+	}
 }
 
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel) {
