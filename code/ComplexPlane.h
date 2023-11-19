@@ -49,6 +49,6 @@ public:
 	void setMouseLocation(Vector2i mousPixel);
 
 	void loadText(Text& text);
-}
 
 #endif
+};
