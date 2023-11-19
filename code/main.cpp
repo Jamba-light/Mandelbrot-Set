@@ -16,7 +16,7 @@ int main()
     unsigned int height = VideoMode::getDesktopMode().height / 2;
     VideoMode vm(width, height);
     RenderWindow window(vm, "Mandelbrot Set", Style::Default);
-
+    ComplexPlane plane(width,height);
     sf::Font font;
     if (!font.loadFromFile("coolvetica.ttf"))
         return(-1);
@@ -36,7 +36,9 @@ int main()
         firstText.setCharacterSize(50);
         firstText.setFillColor(sf::Color::White);
         firstText.setPosition(0,0);
-        ComplexPlane.loadText(firstText);
+        plane.loadText(firstText);
+   
+
         
         Event event;
         while (window.pollEvent(event))
@@ -48,24 +50,27 @@ int main()
             if (event.mouseButton.button == Mouse::Right)
             {
                 Vector2i mousePosition = Mouse::getPosition(window);
-                ComplexPlane.zoomOut();
-                ComplexPlane.setCenter(mousePosition);
-                ComplexPlane.setState(CALCULATING);
+                plane.zoomOut();
+                plane.setCenter(mousePosition);
+
+               
             }
             if (Keyboard::isKeyPressed(Keyboard::Left))
             {
                 Vector2i mousePosition = Mouse::getPosition(window);
-                ComplexPlane.zoomIn();
-                ComplexPlane.setCenter(mousePosition);
-                ComplexPlane.setState(CALCULATING);
+                plane.zoomIn();
+                plane.setCenter(mousePosition);
             }
           
-
-
-
-
-
         }
+
+        plane.updateRender();
+
+
+        window.clear();
+        
+        window.draw(firstText);
+        window.display();
 
        
     }
