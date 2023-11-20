@@ -51,23 +51,33 @@ int main()
                 window.close();
             }
 
-            //Zoom out
-            if (event.mouseButton.button == Mouse::Right)
+            if (event.type == sf::Event::MouseButtonPressed)
             {
-                Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.x);
-                plane.zoomOut();
-                plane.setCenter(mousePosition);
-            }
+                //zoom in
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    std::cout << "the left button was pressed" << std::endl;
+                    std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+                    std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
-            //Zoom in
-            if (event.mouseButton.button == Mouse::Left)
-            {
-                Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.x);
-                plane.zoomIn();
-                plane.setCenter(mousePosition);
-            }
+                    Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.x);
+                    plane.zoomIn();
+                    plane.setCenter(mousePosition);
+                }
+                //zoom out
+                if (event.mouseButton.button == sf::Mouse::Right)
+                {
+                    std::cout << "the right button was pressed" << std::endl;
+                    std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+                    std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
-            if (event.MouseMoved)
+                    Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.x);
+                    plane.zoomOut();
+                    plane.setCenter(mousePosition);
+                }
+            }
+            
+            if (event.type == sf::Event::MouseMoved)
             {
                 plane.setMouseLocation(Vector2i(event.mouseMove.x, event.mouseMove.y));
             }
@@ -79,13 +89,12 @@ int main()
         }
 
         plane.updateRender();
-
+        plane.loadText(firstText);
 
         window.clear();
-        plane.draw(window, RenderStates::Default);
+        plane.draw(window, sf::RenderStates::Default);
         window.draw(firstText);
         window.display();
-
-
     }
+    return 0;
 }
