@@ -35,7 +35,7 @@ int main()
         */
 
         firstText.setFont(font);
-        firstText.setCharacterSize(50);
+        firstText.setCharacterSize(20);
         firstText.setFillColor(sf::Color::White);
         firstText.setPosition(0, 0);
         plane.loadText(firstText);
