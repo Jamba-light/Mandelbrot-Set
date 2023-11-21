@@ -88,6 +88,7 @@ void ComplexPlane::loadText(Text& text) {
 	text.setString(ss.str());
 }
 
+
 size_t ComplexPlane::countIterations(Vector2f coord) {
 	Vector2f z = coord;
 	size_t iterations = 0;
@@ -103,7 +104,6 @@ size_t ComplexPlane::countIterations(Vector2f coord) {
 	}
 	return iterations;
 }
-
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b) {
 	const size_t maxIterations = MAX_ITER;
 
@@ -149,11 +149,11 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b) {
 	}
 }
 
-Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel) {
+Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel) { //??
 	Vector2f newPixel;
 
-	newPixel.x = ((mousePixel.x - 0) / (float)(m_pixel_size.x)) * m_plane_size.x + (m_plane_center.x - m_plane_size.x / 2.0);
-	newPixel.y = ((mousePixel.y - m_pixel_size.y) / (float)(m_pixel_size.y)) * m_plane_size.y + (m_plane_center.y - m_plane_size.y / 2.0);
+	newPixel.x = ((mousePixel.x - m_plane_center.x) / (m_pixel_size.x - m_plane_center.x)) * (m_plane_size.x) + ((m_plane_center.x - m_plane_size.x) / 2.0);
+	newPixel.y = ((mousePixel.y - m_pixel_size.y) / (m_plane_center.y - m_pixel_size.y)) * (m_plane_size.y) + ((m_plane_center.y - m_plane_size.y) / 2.0);
 
 	return newPixel;
 }
