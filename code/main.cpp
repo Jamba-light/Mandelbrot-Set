@@ -60,7 +60,7 @@ int main()
                     std::cout << "mouse x: " << event.mouseButton.x << std::endl;
                     std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
-                    Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.x);
+                    Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.y);
                     plane.zoomIn();
                     plane.setCenter(mousePosition);
                 }
@@ -71,7 +71,7 @@ int main()
                     std::cout << "mouse x: " << event.mouseButton.x << std::endl;
                     std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
-                    Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.x);
+                    Vector2i mousePosition = Vector2i(event.mouseButton.x, event.mouseButton.y);
                     plane.zoomOut();
                     plane.setCenter(mousePosition);
                 }
