@@ -93,7 +93,7 @@ size_t ComplexPlane::countIterations(Vector2f coord) {
 	size_t iterations = 0;
 
 	for (iterations; iterations < MAX_ITER; iterations++) {
-		float xtemp = pow(z.x, 2.0) + coord.x;
+		float xtemp = pow(z.x, 2.0) - pow(z.y,2.0) + coord.x;
 		z.y = 2 * z.x * z.y + coord.y;
 		z.x = xtemp;
 
