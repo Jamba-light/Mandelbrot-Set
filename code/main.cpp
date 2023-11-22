@@ -28,19 +28,11 @@ int main()
 
     while (window.isOpen())
     {
-        /*
-        ****************************************
-        Prompt the user
-        ****************************************
-        */
-
         firstText.setFont(font);
         firstText.setCharacterSize(20);
         firstText.setFillColor(sf::Color::White);
         firstText.setPosition(0, 0);
         plane.loadText(firstText);
-
-
 
         Event event;
         while (window.pollEvent(event))

@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <cmath>
 #include <sstream>
+
 using namespace std;
 using namespace sf;
 
@@ -105,39 +106,37 @@ size_t ComplexPlane::countIterations(Vector2f coord) {
 	return iterations;
 }
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b) {
-	const size_t maxIterations = MAX_ITER;
-
-	if (count == maxIterations) {
+	if (count == MAX_ITER) {
 		r = g = b = 0;
 	}
 	else {
-		const size_t regionSize = maxIterations / 5;
+		const size_t regionSize = MAX_ITER / 5;
 		size_t region = count / regionSize;
 
-		double t = static_cast<double>(count % regionSize) / static_cast<double>(regionSize);
+		double t = (double)(count % regionSize) / (double)(regionSize);
 
 		// Purple/Blue to Turquoise
 		if (region == 0) {
 			r = 0;
-			g = static_cast<Uint8>(t * 255);
-			b = static_cast<Uint8>((1.0 - t) * 255);
+			g = (Uint8)(t * 255);
+			b = (Uint8)((1.0 - t) * 255);
 		}
 		// Turquoise to Green
 		else if (region == 1) {
 			r = 0;
-			g = static_cast<Uint8>((1.0 - t) * 255);
-			b = static_cast<Uint8>(t * 255);
+			g = (Uint8)((1.0 - t) * 255);
+			b = (Uint8)(t * 255);
 		}
 		// Green to Yellow
 		else if (region == 2) {
-			r = static_cast<Uint8>(t * 255);
+			r = (Uint8)(t * 255);
 			g = 255;
 			b = 0;
 		}
 		// Yellow to Red
 		else if (region == 3) {
 			r = 255;
-			g = static_cast<Uint8>((1.0 - t) * 255);
+			g = (Uint8)((1.0 - t) * 255);
 			b = 0;
 		}
 		// Red
